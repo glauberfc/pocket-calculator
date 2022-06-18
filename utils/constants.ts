@@ -92,12 +92,6 @@ export const BUTTONS: Button[] = [
     type: 'operand',
   },
   {
-    key: 'u2219',
-    displayText: '\u2219',
-    value: '.',
-    type: 'operand',
-  },
-  {
     key: '=',
     displayText: '=',
     value: '=',
