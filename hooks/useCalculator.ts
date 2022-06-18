@@ -46,7 +46,7 @@ function reducer(state: State, action: Action): State {
     case 'COMPUTE':
       return {
         ...state,
-        firstOperand: compute(
+        firstOperand: computeValue(
           state.firstOperand,
           state.secondOperand,
           state.operator,
@@ -59,16 +59,18 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-function compute(
+function computeValue(
   firstOperand: number = 0,
   secondOperand: number = 0,
   operator: string | null,
 ) {
+  if (firstOperand === 0 && secondOperand === 0) return 0
+  if (secondOperand === 0) return firstOperand
   if (operator === '+') return firstOperand + secondOperand
   if (operator === '-') return firstOperand - secondOperand
   if (operator === '*') return firstOperand * secondOperand
   if (operator === '/') return firstOperand / secondOperand
-  throw new Error('Invalid operator')
+  return firstOperand
 }
 
 function useCalculator() {

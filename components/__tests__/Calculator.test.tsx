@@ -60,4 +60,73 @@ describe('Calculator', () => {
     await userEvent.click(screen.getByRole('button', { name: /=/i }))
     display.toHaveTextContent('100')
   })
+
+  it('should not break if user clicks the equals button many times', async () => {
+    render(<Calculator />)
+    const display = expect(screen.getByLabelText('display'))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /=/i }))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /=/i }))
+    display.toHaveTextContent('0')
+  })
+
+  it('should not break if user the sum button many times', async () => {
+    render(<Calculator />)
+    const display = expect(screen.getByLabelText('display'))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /1/i }))
+    display.toHaveTextContent('1')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u002b/i }))
+    display.toHaveTextContent('1')
+
+    await userEvent.click(screen.getByRole('button', { name: /2/i }))
+    display.toHaveTextContent('2')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u002b/i }))
+    display.toHaveTextContent('3')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u002b/i }))
+    display.toHaveTextContent('3')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u002b/i }))
+    display.toHaveTextContent('3')
+  })
+
+  it('should not break if user clicks the divide button many times', async () => {
+    render(<Calculator />)
+    const display = expect(screen.getByLabelText('display'))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u00f7/i }))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u00f7/i }))
+    display.toHaveTextContent('0')
+  })
+
+  it('should not break if user chooses first operand and clicks the divide button many times', async () => {
+    render(<Calculator />)
+    const display = expect(screen.getByLabelText('display'))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /2/i }))
+    display.toHaveTextContent('2')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u00f7/i }))
+    display.toHaveTextContent('2')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u00f7/i }))
+    display.toHaveTextContent('2')
+
+    await userEvent.click(screen.getByRole('button', { name: /2/i }))
+    display.toHaveTextContent('2')
+
+    await userEvent.click(screen.getByRole('button', { name: /=/i }))
+    display.toHaveTextContent('1')
+  })
 })
