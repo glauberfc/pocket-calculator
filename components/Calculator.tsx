@@ -30,7 +30,7 @@ export default function Calculator() {
         </li>
         {BUTTONS.map((item) => {
           return (
-            <li key={item.key}>
+            <li key={item.key} className={item.key === '=' ? 'col-span-2' : ''}>
               <button
                 className="w-full py-4 px-8 text-2xl text-center rounded-md border border-gray-400 bg-gray-200"
                 onClick={() => handleClick(item)}
