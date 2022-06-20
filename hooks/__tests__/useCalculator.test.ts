@@ -29,4 +29,26 @@ describe('useCalculator', () => {
 
     expect(result.current.firstOperand).toEqual('1')
   })
+
+  it('should multiply two numbers', async () => {
+    const { result } = renderHook(() => useCalculator())
+
+    act(() => result.current.setOperand('2'))
+    act(() => result.current.setOperator('*'))
+    act(() => result.current.setOperand('2'))
+    act(() => result.current.setOperator('='))
+
+    expect(result.current.firstOperand).toEqual('4')
+  })
+
+  it('should divide two numbers', async () => {
+    const { result } = renderHook(() => useCalculator())
+
+    act(() => result.current.setOperand('10'))
+    act(() => result.current.setOperator('/'))
+    act(() => result.current.setOperand('2'))
+    act(() => result.current.setOperator('='))
+
+    expect(result.current.firstOperand).toEqual('5')
+  })
 })
