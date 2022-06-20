@@ -21,7 +21,7 @@ export default function Calculator() {
   return (
     <div>
       <div
-        className="mb-4 p-4 text-right text-3xl tracking-wider	font-semibold rounded-md border-2 border-secondary-600 text-white bg-transparent"
+        className="mb-4 p-4 text-right text-3xl tracking-wider font-semibold rounded-md border-2 border-secondary-600 text-white bg-transparent"
         aria-label="display"
       >
         {secondOperand === null ? firstOperand : secondOperand}
