@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { ErrorBoundary } from 'react-error-boundary'
-
 import Calculator from 'components/Calculator'
 import ErrorFallback from 'components/ErrorFallback'
 
