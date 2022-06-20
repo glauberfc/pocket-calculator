@@ -11,6 +11,7 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "clsx": "^1.1.1",
     "mathjs": "^10.6.1",
     "next": "12.1.6",
     "react": "18.2.0",
