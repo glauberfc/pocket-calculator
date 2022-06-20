@@ -5,28 +5,28 @@ describe('useCalculator', () => {
   it('should starts with value equals to 0', () => {
     const { result } = renderHook(useCalculator)
 
-    expect(result.current.firstOperand).toEqual(0)
+    expect(result.current.firstOperand).toEqual('0')
   })
 
   it('should sum two numbers', async () => {
     const { result } = renderHook(() => useCalculator())
 
-    act(() => result.current.setOperand(1))
+    act(() => result.current.setOperand('1'))
     act(() => result.current.setOperator('+'))
-    act(() => result.current.setOperand(2))
+    act(() => result.current.setOperand('2'))
     act(() => result.current.setOperator('='))
 
-    expect(result.current.firstOperand).toEqual(3)
+    expect(result.current.firstOperand).toEqual('3')
   })
 
   it('should subtract two numbers', async () => {
     const { result } = renderHook(() => useCalculator())
 
-    act(() => result.current.setOperand(2))
+    act(() => result.current.setOperand('2'))
     act(() => result.current.setOperator('-'))
-    act(() => result.current.setOperand(1))
+    act(() => result.current.setOperand('1'))
     act(() => result.current.setOperator('='))
 
-    expect(result.current.firstOperand).toEqual(1)
+    expect(result.current.firstOperand).toEqual('1')
   })
 })

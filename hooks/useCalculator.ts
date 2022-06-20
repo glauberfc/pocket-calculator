@@ -1,8 +1,9 @@
 import { useReducer } from 'react'
+import { evaluate } from 'mathjs'
 
 type State = {
-  firstOperand: number
-  secondOperand: number
+  firstOperand: string
+  secondOperand: string | null
   operator: string | null
 }
 
@@ -14,16 +15,16 @@ type Action =
     }
   | {
       type: 'SET_OPERATOR'
-      payload: string | null
+      payload: string
     }
   | {
       type: 'SET_VALUE'
-      payload: number
+      payload: string
     }
 
 const initialState: State = {
-  firstOperand: 0,
-  secondOperand: 0,
+  firstOperand: '0',
+  secondOperand: null,
   operator: null,
 }
 
@@ -46,31 +47,17 @@ function reducer(state: State, action: Action): State {
     case 'COMPUTE':
       return {
         ...state,
-        firstOperand: computeValue(
-          state.firstOperand,
-          state.secondOperand,
-          state.operator,
+        firstOperand: String(
+          evaluate(
+            `${state.firstOperand}${state.operator}${state.secondOperand}`,
+          ),
         ),
-        secondOperand: 0,
+        secondOperand: null,
         operator: action.payload,
       }
     default:
       throw new Error('Unhandled action type')
   }
-}
-
-function computeValue(
-  firstOperand: number = 0,
-  secondOperand: number = 0,
-  operator: string | null,
-) {
-  if (firstOperand === 0 && secondOperand === 0) return 0
-  if (secondOperand === 0) return firstOperand
-  if (operator === '+') return firstOperand + secondOperand
-  if (operator === '-') return firstOperand - secondOperand
-  if (operator === '*') return firstOperand * secondOperand
-  if (operator === '/') return firstOperand / secondOperand
-  return firstOperand
 }
 
 function useCalculator() {
@@ -85,12 +72,17 @@ function useCalculator() {
   }
 
   function setOperator(operator: string) {
+    if (state.operator === null)
+      return dispatch({ type: 'SET_OPERATOR', payload: operator })
+
+    if (state.secondOperand === null) return
+
     if (operator === '=') return compute()
-    if (state.operator !== null) return compute(operator)
-    return dispatch({ type: 'SET_OPERATOR', payload: operator })
+
+    return compute(operator)
   }
 
-  function setOperand(value: string | number) {
+  function setOperand(value: string) {
     const isOperatorNull = state.operator === null
     const currentOperand = isOperatorNull
       ? state.firstOperand
@@ -98,7 +90,7 @@ function useCalculator() {
 
     return dispatch({
       type: 'SET_VALUE',
-      payload: Number(`${currentOperand}${value}`),
+      payload: currentOperand === null ? value : currentOperand + value,
     })
   }
 

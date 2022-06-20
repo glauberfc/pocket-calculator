@@ -17,7 +17,7 @@ export default function Calculator() {
         className="mb-4 p-4 text-right rounded-md border border-gray-400 bg-white"
         aria-label="display"
       >
-        {secondOperand > 0 ? secondOperand : firstOperand}
+        {secondOperand === null ? firstOperand : secondOperand}
       </div>
       <ul role="list" className="grid grid-cols-4 gap-1">
         <li className="col-span-4">
