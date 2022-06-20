@@ -1,9 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import styles from '../styles/Home.module.css'
 import Calculator from 'components/Calculator'
+import ErrorFallback from 'components/ErrorFallback'
 
 const Home: NextPage = () => {
   return (
@@ -19,7 +21,9 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <Calculator />
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Calculator />
+        </ErrorBoundary>
       </main>
 
       <footer className={styles.footer}>

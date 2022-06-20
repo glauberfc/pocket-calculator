@@ -28,6 +28,36 @@ describe('Calculator', () => {
     display.toHaveTextContent('43')
   })
 
+  it('should sum two numbers with decimals', async () => {
+    render(<Calculator />)
+    const display = expect(screen.getByLabelText('display'))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /3/i }))
+    display.toHaveTextContent('3')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u2219/i }))
+    display.toHaveTextContent('3.')
+
+    await userEvent.click(screen.getByRole('button', { name: /2/i }))
+    display.toHaveTextContent('3.2')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u002b/i }))
+    display.toHaveTextContent('3.2')
+
+    await userEvent.click(screen.getByRole('button', { name: /5/i }))
+    display.toHaveTextContent('5')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u2219/i }))
+    display.toHaveTextContent('5.')
+
+    await userEvent.click(screen.getByRole('button', { name: /6/i }))
+    display.toHaveTextContent('5.6')
+
+    await userEvent.click(screen.getByRole('button', { name: /=/i }))
+    display.toHaveTextContent('8.8')
+  })
+
   it('should subtract two numbers', async () => {
     render(<Calculator />)
     const display = expect(screen.getByLabelText('display'))
@@ -200,5 +230,26 @@ describe('Calculator', () => {
 
     await userEvent.click(screen.getByRole('button', { name: /=/i }))
     display.toHaveTextContent('1')
+  })
+
+  it('should not break if user chooses different operators', async () => {
+    render(<Calculator />)
+    const display = expect(screen.getByLabelText('display'))
+    display.toHaveTextContent('0')
+
+    await userEvent.click(screen.getByRole('button', { name: /8/i }))
+    display.toHaveTextContent('8')
+
+    await userEvent.click(screen.getByRole('button', { name: /=/i }))
+    display.toHaveTextContent('8')
+
+    await userEvent.click(screen.getByRole('button', { name: /\u00f7/i }))
+    display.toHaveTextContent('8')
+
+    await userEvent.click(screen.getByRole('button', { name: /2/i }))
+    display.toHaveTextContent('2')
+
+    await userEvent.click(screen.getByRole('button', { name: /=/i }))
+    display.toHaveTextContent('4')
   })
 })

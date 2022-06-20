@@ -19,6 +19,17 @@ describe('useCalculator', () => {
     expect(result.current.firstOperand).toEqual('3')
   })
 
+  it('should sum two numbers with decimals', async () => {
+    const { result } = renderHook(() => useCalculator())
+
+    act(() => result.current.setOperand('1.5'))
+    act(() => result.current.setOperator('+'))
+    act(() => result.current.setOperand('4.2'))
+    act(() => result.current.setOperator('='))
+
+    expect(result.current.firstOperand).toEqual('5.7')
+  })
+
   it('should subtract two numbers', async () => {
     const { result } = renderHook(() => useCalculator())
 

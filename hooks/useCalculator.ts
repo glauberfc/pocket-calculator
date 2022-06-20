@@ -47,16 +47,28 @@ function reducer(state: State, action: Action): State {
     case 'COMPUTE':
       return {
         ...state,
-        firstOperand: String(
-          evaluate(
-            `${state.firstOperand}${state.operator}${state.secondOperand}`,
-          ),
+        firstOperand: computeValue(
+          state.firstOperand,
+          state.secondOperand,
+          state.operator,
         ),
         secondOperand: null,
         operator: action.payload,
       }
     default:
       throw new Error('Unhandled action type')
+  }
+}
+
+function computeValue(
+  firstOperand: string,
+  secondOperand: string | null,
+  operator: string | null,
+) {
+  try {
+    return String(evaluate(`${firstOperand}${operator}${secondOperand}`))
+  } catch (error) {
+    return 'Error'
   }
 }
 
@@ -72,7 +84,7 @@ function useCalculator() {
   }
 
   function setOperator(operator: string) {
-    if (state.operator === null)
+    if (state.operator === null && operator !== '=')
       return dispatch({ type: 'SET_OPERATOR', payload: operator })
 
     if (state.secondOperand === null) return
@@ -90,7 +102,12 @@ function useCalculator() {
 
     return dispatch({
       type: 'SET_VALUE',
-      payload: currentOperand === null ? value : currentOperand + value,
+      payload:
+        currentOperand === null ||
+        currentOperand === '0' ||
+        currentOperand === 'Error'
+          ? value
+          : currentOperand + value,
     })
   }
 
